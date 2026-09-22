@@ -1,0 +1,31 @@
+# --- Core app ---
+streamlit>=1.38.0
+python-dotenv>=1.0.1
+
+# --- Database ---
+sqlalchemy>=2.0.35
+
+# --- Module 1: RAG Chatbot ---
+langchain>=0.3.20
+langchain-community>=0.3.15
+langchain-google-genai>=2.0.10
+langgraph>=0.2.60
+chromadb>=0.5.20
+google-generativeai>=0.8.3
+sentence-transformers>=3.2.1
+langchain-huggingface>=0.1.0
+langchain-chroma>=0.1.4
+pypdf>=5.0.0
+
+# --- Module 2: Premium Quote Predictor ---
+pandas>=2.2.3
+numpy>=2.0.0
+scikit-learn>=1.5.2
+shap>=0.46.0
+joblib>=1.4.2
+matplotlib>=3.9.0
+
+# --- Module 4: Management Dashboard ---
+plotly>=5.24.1
+altair>=5.4.1
+

@@ -1,0 +1,28 @@
+# Secrets — never commit
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Database
+*.db
+*.sqlite3
+
+# ChromaDB persisted store (regenerable from data/policies/)
+chroma_db/*
+!chroma_db/.gitkeep
+
+# Large data files (regenerable / already shared separately — keep repo light)
+data/datasets/*.csv
+
+# Trained models (large binary files — track separately, not every commit)
+models/*.pkl
+
+# OS / editor junk
+.DS_Store
+.vscode/
+*.swp
