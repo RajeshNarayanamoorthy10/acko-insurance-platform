@@ -4,7 +4,7 @@ Acko Insurance Platform - Streamlit app.
 Tabs:
   - Chat with Acko   (Module 1: RAG policy chatbot)
   - Get a Quote       (Module 2: premium predictor)
-  - Dashboard          (Module 4: added once real usage data exists)
+  - Dashboard          (Module 4: Dashboard)
 """
 
 import streamlit as st
@@ -22,6 +22,21 @@ from src.db.database import engine
 
 st.set_page_config(page_title="Acko Insurance Platform", layout="wide")
 st.title("Acko Insurance - AI Platform")
+
+VEHICLE_MAKES = ['Honda', 'Mercedes-Benz', 'Nissan', 'Ford', 'Toyota', 'Mahindra', 'Tata',
+                  'MG', 'BMW', 'Audi', 'Renault', 'Kia', 'Volkswagen', 'Skoda',
+                  'Maruti Suzuki', 'BYD', 'Hyundai', 'Jeep', 'Royal Enfield', 'Yamaha',
+                  'Suzuki', 'Bounce', 'Ather Energy', 'TVS', 'Bajaj', 'Ampere', 'KTM',
+                  'Ola Electric', 'Hero MotoCorp', 'Kawasaki']
+
+SEGMENTS = ['sedan', 'suv', 'mpv', 'ev', 'hatchback', 'hybrid', 'retro', 'scooter',
+            'sport', 'ev_scooter', 'commuter', 'adventure', 'naked', 'supersport',
+            'cruiser', 'touring', 'roadster', 'sport_tourer', 'crossover', 'tourer',
+            'cafe_racer', 'moped']
+
+FUEL_TYPES = ['Petrol', 'Diesel', 'Electric', 'CNG', 'LPG', 'Hybrid']
+
+POLICY_TYPES = ['Comprehensive', 'Third Party', 'Own Damage']
 
 @st.cache_data(ttl=60)
 def load_quotations(start_date, end_date):
@@ -78,17 +93,18 @@ with tab_quote:
     col1, col2, col3 = st.columns(3)
     with col1:
         vehicle_type = st.selectbox("Vehicle type", ["car", "bike"])
-        vehicle_make = st.text_input("Make (e.g. Hyundai, Honda)", "Hyundai")
-        segment = st.text_input("Segment (e.g. Hatchback, Sedan)", "Hatchback")
-        fuel_type = st.selectbox("Fuel type", ["Petrol", "Diesel", "CNG", "Electric"])
-        policy_type = st.selectbox("Policy type", ["Comprehensive", "Third Party"])
+        vehicle_make = st.selectbox("Make", VEHICLE_MAKES, index=VEHICLE_MAKES.index("Hyundai"))
+        segment = st.selectbox("Segment", SEGMENTS, index=SEGMENTS.index("hatchback"))
+        fuel_type = st.selectbox("Fuel type", FUEL_TYPES)
+        policy_type = st.selectbox("Policy type", POLICY_TYPES)
 
     with col2:
         customer_age = st.number_input("Your age", 18, 80, 35)
         city_tier = st.selectbox("City tier", [1, 2, 3])
         city_risk_score = st.slider("City risk score", 0.0, 1.0, 0.5)
-        manufacturing_year = st.number_input("Manufacturing year", 2000, 2026, 2021)
-        vehicle_age_years = st.number_input("Vehicle age (years)", 0, 25, 4)
+        manufacturing_year = st.number_input("Manufacturing year", 2000, date.today().year, 2021)
+        vehicle_age_years = date.today().year - manufacturing_year
+        st.caption(f"Vehicle age: {vehicle_age_years} years (calculated automatically)")
 
     with col3:
         engine_cc = st.number_input("Engine CC", 50, 5000, 1197)
